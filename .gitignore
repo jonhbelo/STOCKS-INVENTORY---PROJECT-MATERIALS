@@ -1,0 +1,11 @@
+# clasp: holds the Apps Script project ID and local paths
+.clasp.json
+.clasprc.json
+node_modules/
+
+# OS and editor files
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.claude/
