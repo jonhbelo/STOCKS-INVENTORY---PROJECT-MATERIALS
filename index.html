@@ -35,7 +35,7 @@ input,select{font:inherit;padding:8px 10px;border:1px solid var(--bd);border-rad
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd);font-size:14px;white-space:nowrap}
 th{font-size:12px;color:var(--mu);font-weight:600}
 input[type=text],input:not([type]),td{text-transform:uppercase}
-.n{text-align:right}.tag{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid currentColor}
+th.n,td.n{text-align:right}label>input,label>select{width:100%}label{min-width:0}select{max-width:100%}.tag{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid currentColor}
 .ok{color:var(--ok)}.low{color:var(--warn)}.out{color:var(--bad)}
 .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .stat{flex:1 1 140px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px 14px}
@@ -74,33 +74,70 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
 #auth.zout{animation:zout .25s ease-in forwards;pointer-events:none}@keyframes zout{to{opacity:0;transform:scale(.97)}}
 #app.zin{animation:zin .48s ease-out both}@keyframes zin{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){#auth.zout,#app.zin{animation:none}}
-@media(max-width:700px){.app{flex-direction:column}nav{width:100%;display:flex;flex-direction:row;align-items:center;gap:4px;padding:10px;border-right:0;border-bottom:1px solid var(--bd)}nav h1{display:none}nav button{margin:0;justify-content:center;padding:9px 6px;font-size:13px}nav button span{display:none}main{padding:16px}nav{overflow:visible;flex-wrap:wrap;gap:2px;padding:8px 6px}.psw{flex:0 0 calc(100% - 12px);margin:0 6px 6px}.ttl{flex:0 0 100%;margin:2px 6px 6px;text-align:center}nav button[data-t]{flex:1 1 0;min-width:0;white-space:normal;text-align:center;justify-content:center;font-size:11px;line-height:1.15;padding:8px 2px}#c4{display:inline}nav .nu .av{margin:0 0 0 2px;width:34px;height:34px;flex:0 0 34px}.nu{display:flex;margin:0 0 0 auto;gap:4px}.pop{left:auto;right:10px;bottom:auto;top:58px}input,select{font-size:16px}}
+.tabs{display:flex;flex-direction:column}i.x,i.tl{font-style:normal}
+/* Phones: header = name + theme + account on one row, project switcher, then a row of tabs you can swipe. */
+@media(max-width:700px){
+.app{flex-direction:column}
+nav{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 6px;padding:10px 12px 0;border-right:0;border-bottom:1px solid var(--bd)}
+nav h1{display:none}
+.ttl{order:0;flex:1 1 0;min-width:0;margin:0;text-align:left}
+.ttl b,.ttl small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu{order:1;display:flex;margin:0;gap:6px}
+nav .nu .av{margin:0;width:36px;height:36px;flex:0 0 36px}
+.psw{order:2;flex:0 0 100%;margin:0}
+nav .psw button{padding:9px 4px;font-size:11px}
+.tabs{order:3;flex:0 0 calc(100% + 24px);margin:0 -12px;flex-direction:row;gap:6px;overflow-x:auto;padding:2px 12px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+nav .tabs button{flex:0 0 auto;width:auto;margin:0;padding:8px 14px;font-size:13px;border-radius:99px;white-space:nowrap;border:1px solid var(--bd);justify-content:center}
+nav .tabs button.on{border-color:var(--ac)}
+nav .tabs button span,i.x{display:none}
+#c4:not(:empty){display:inline-block;margin-left:6px;min-width:18px;padding:0 5px;border-radius:99px;background:var(--bad);color:#fff;font-size:11px;line-height:18px;opacity:1;text-align:center}
+main{padding:16px 14px 28px}
+h2{font-size:19px}.sub{font-size:14px}
+.card{padding:14px}
+.stats{gap:8px}.stat{padding:10px 12px}.stat b{font-size:20px}
+.ln label:first-child{flex-basis:100%}
+.row>.btn,.row>a.btn{flex:1 1 auto;text-align:center}
+.pop{left:auto;right:10px;bottom:auto;top:56px}
+input,select{font-size:16px}
+.md{padding:16px;max-height:85vh}
+.mb{padding:10px}
+.md td{white-space:normal;overflow-wrap:anywhere}.md td.n{white-space:nowrap}
+/* Tables become one card per row, with each value labelled. */
+table.rt{min-width:0}
+table.rt tr:first-child{display:none}
+table.rt tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 10px;padding:12px 2px;border-bottom:1px solid var(--bd)}
+table.rt tr:last-child{border-bottom:0}
+table.rt td{border:0;padding:0;white-space:normal;text-align:left;font-size:14px;min-width:0;overflow-wrap:anywhere}
+table.rt td[data-l]::before{content:attr(data-l);display:block;font-size:11px;color:var(--mu);text-transform:none;margin-bottom:2px}
+table.rt td.nm{grid-column:1/-1;order:-1;font-weight:600;font-size:15px}
+table.rt td.full,table.rt td.empty{grid-column:1/-1}
+table.rt td.s2{grid-column:span 2}
+table.rt td:empty{display:none}
+table.rt .tag{font-size:11px;padding:2px 6px;white-space:nowrap;display:inline-block}
+}
 .tg{width:34px;height:34px;border-radius:50%;border:1px solid var(--bd);background:var(--sf);color:var(--tx);cursor:pointer;font-size:16px;line-height:1;padding:0;display:inline-flex;align-items:center;justify-content:center;flex:none}.tg.fx{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;z-index:101}
 </style>
 </head>
 <body>
 <div id="ld" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#97a0ad;font:15px system-ui,sans-serif">Loading…</div>
 <script>window.addEventListener('error',function(e){var d=document.getElementById('ld');if(d){d.style.color='#ef7b6d';d.textContent='Page error: '+e.message+' (line '+e.lineno+'). The file may have been edited incorrectly.'}});window.addEventListener('unhandledrejection',function(e){var d=document.getElementById('ld');if(d){d.style.color='#ef7b6d';d.textContent='Error: '+((e.reason&&e.reason.message)||e.reason)}});</script>
-<div id="auth" style="display:none"><button type="button" class="tg fx" onclick="toggleTheme()"></button><form class="ac" id="aForm" onsubmit="authSubmit(event);return false" novalidate>
-<h2 id="aT"></h2><p class="sub" id="aS"></p>
-<label>Email or username<input id="aEmail" type="text" autocomplete="username" autocapitalize="none" placeholder="Email or username"></label>
-<label style="margin-top:12px">Password<input id="aPass" type="password" autocomplete="current-password"></label>
-<button class="btn" id="aB" style="width:100%;margin-top:16px">Log in</button>
-<button type="button" class="btn g" id="aG" onclick="gLogin()" style="width:100%;margin-top:10px;display:none">Continue as admin with my Google account</button><div id="aMsg" class="am"></div><div style="color:var(--mu);text-align:center;margin-top:14px;font-size:11px">Version 1.3</div></form>
-<div class="ac" id="blk" style="display:none"><h2 id="bT"></h2><p class="sub" id="bM" style="margin:0"></p></div></div>
+<div id="auth" style="display:none"><button type="button" class="tg fx" onclick="toggleTheme()"></button><div class="ac" id="blk" style="display:none"><h2 id="bT"></h2><p class="sub" id="bM" style="margin:0"></p><button type="button" class="btn" id="bR" onclick="boot()" style="width:100%;margin-top:16px;display:none">Try again</button><div style="color:var(--mu);text-align:center;margin-top:14px;font-size:11px">Version 1.3</div></div></div>
 <div id="intro"><img alt="Rite Products, Incorporated" src="data:image/png;base64,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"></div>
 <div id="pop" class="pop" style="display:none"><b id="pn"></b><small id="pe"></small></div>
 <div class="app" id="app" style="display:none">
 <nav>
-<div class="ttl"><b>RITE PRODUCTS, INCORPORATED</b><small id="ttlS">Systems Projects - Inventory · v1.3</small></div>
+<div class="ttl"><b>RITE PRODUCTS, INCORPORATED</b><small id="ttlS">Systems Projects - Inventory · v1.4</small></div>
 <div class="psw" role="group" aria-label="Project"><button type="button" data-p="hvac" onclick="switchProj('hvac')">HVAC PROJECTS</button><button type="button" data-p="systems" onclick="switchProj('systems')">SYSTEMS PROJECTS</button></div>
+<div class="tabs">
 <button data-t="stocks">Stocks <span id="c1"></span></button>
-<button data-t="received">Received Items <span id="c2"></span></button>
-<button data-t="delivered">Delivered Items <span id="c3"></span></button>
+<button data-t="received"><i class="tl">Received<i class="x"> Items</i></i> <span id="c2"></span></button>
+<button data-t="delivered"><i class="tl">Delivered<i class="x"> Items</i></i> <span id="c3"></span></button>
 <button data-t="settings">Settings</button>
 <button data-t="users" id="tUsers" style="display:none">Users <span id="c4"></span></button>
 <button data-t="import" id="tImp" style="display:none">Import</button>
 <button data-t="database" id="tDb" style="display:none">Database</button>
+</div>
 <div class="nu"><div style="display:flex;align-items:center;gap:8px"><button type="button" class="tg" onclick="toggleTheme()"></button><button id="av" class="av" onclick="togglePop(event)" title="Account"></button></div></div>
 </nav>
 <main id="main"></main>
@@ -133,13 +170,13 @@ function stocks(){
  const e=isEd('items')?item(editing.id):null;
  const list=S.items.filter(i=>i.name.toLowerCase().includes(q.toLowerCase())).slice().sort((a,b)=>(b.ts||0)-(a.ts||0));
  const low=S.items.filter(i=>qty(i.id)<=i.min).length;
- return `<h2>Stocks</h2><p class="sub">On hand = beginning balance + received − delivered.</p>
+ return `<h2>Stocks</h2><p class="sub">On hand = beginning balance + received − ${OUT().col.toLowerCase()}.</p>
  <div class="stats"><div class="stat"><b>${S.items.length}</b><small>Item types</small></div><div class="stat"><b>${low}</b><small>Low or out of stock</small></div></div>
  ${isViewer()?'':`<div class="card${e?' edit':''}"><div id="lines">${stockLine(e,0)}</div>
  <div class="row" style="margin-top:12px">${e?'':'<button class="btn g" onclick="addLine()">+ Add another item</button>'}<button class="btn" onclick="saveItem()">${e?'Update item':'Save items'}</button>${e?'<button class="btn g" onclick="cancel()">Cancel</button>':''}</div><div id="msg">${msg}</div></div>`}
  <div class="card"><label style="margin-bottom:10px">Search<input id="s" value="${esc(q)}" placeholder="Search items" oninput="q=this.value;srch()"></label>
- <div class="tw" id="stk"><table><tr><th>Item</th><th class="n">Beginning</th><th class="n">Received</th><th class="n">Delivered</th><th class="n">On hand</th><th>Unit</th><th>Status</th><th>Action</th></tr>
- ${list.map(i=>`<tr><td>${esc(i.name)}</td><td class="n">${i.begin||0}</td><td class="n">${sum('received',i.id)}</td><td class="n">${sum('delivered',i.id)}</td><td class="n"><b>${qty(i.id)}</b></td><td>${esc(i.unit)}</td><td>${status(i)}</td><td>${eb('items',i.id)}</td></tr>`).join('')||`<tr><td colspan="8" class="empty">${!loaded?'Loading…':S.items.length?'No matching items.':'No items yet. Add your first items above.'}</td></tr>`}
+ <div class="tw" id="stk"><table class="rt"><tr><th>Item</th><th class="n">Beginning</th><th class="n">Received</th><th class="n">${OUT().col}</th><th class="n">On hand</th><th>Unit</th><th>Status</th><th>Action</th></tr>
+ ${list.map(i=>`<tr><td class="nm">${esc(i.name)}</td><td class="n" data-l="Beginning">${i.begin||0}</td><td class="n" data-l="Received">${sum('received',i.id)}</td><td class="n" data-l="${OUT().col}">${sum('delivered',i.id)}</td><td class="n" data-l="On hand"><b>${qty(i.id)}</b></td><td data-l="Unit">${esc(i.unit)}</td><td data-l="Status">${status(i)}</td><td class="full">${eb('items',i.id)}</td></tr>`).join('')||`<tr><td colspan="8" class="empty">${!loaded?'Loading…':S.items.length?'No matching items.':'No items yet. Add your first items above.'}</td></tr>`}
  </table></div></div>`;
 }
 const txOf=r=>r.tx||r.id;
@@ -159,17 +196,18 @@ function log(kind){
  const rec=kind==='received',recs=isEd(kind)?S[kind].filter(r=>txOf(r)===editing.id):[],e=recs[0];
  const dl=S.items.map(i=>`<option value="${esc(i.name)}">${qty(i.id)} ${esc(i.unit)} on hand</option>`).join('');
  const g=groups(kind);GL[kind]=g;
- return `<h2>${rec?'Received Items':'Delivered Items'}</h2><p class="sub">${rec?'Record materials coming in from suppliers.':'Record materials going out to projects.'} Add several items in one transaction.</p>
+ const o=OUT();
+ return `<h2>${rec?'Received Items':o.title}</h2><p class="sub">${rec?'Record materials coming in from suppliers. Add several items in one transaction.':o.sub}</p>
  ${isViewer()?'':`<div class="card${e?' edit':''}"><div class="row">
  <label>Date<input id="d" type="date" value="${e?esc(e.date):today()}"></label>
  <label>${rec?'Supplier':'Project'}<input id="p1" value="${esc(e?e.a:'')}" placeholder="${rec?'Supplier name':'Project name'}"></label>
  ${rec?`<label>Project (optional)<input id="p2" value="${esc(e?e.b:'')}"></label><label>Sales Invoice No.<input id="p3" value="${esc(e?e.inv:'')}"></label><label>PO No.<input id="p4" value="${esc(e?e.po:'')}"></label><label>JO No. (optional)<input id="p5" value="${esc(e?e.jo:'')}"></label>`
- :`<label>JO No.<input id="p3" value="${esc(e?e.jo:'')}"></label><label>DR No.<input id="p4" value="${esc(e?e.ref:'')}"></label>`}</div>
+ :`${o.client?`<label>Client Name<input id="p6" value="${esc(e?e.client:'')}" placeholder="Client name"></label>`:''}<label>JO No.<input id="p3" value="${esc(e?e.jo:'')}"></label><label>${o.ref}<input id="p4" value="${esc(e?e.ref:'')}"></label>`}</div>
  <datalist id="il">${dl}</datalist>
  <div id="lines" style="margin-top:12px">${recs.length?recs.map((r,i)=>logLine(r,i>0)).join(''):logLine(null,0)}</div>
- <div class="row" style="margin-top:12px"><button class="btn g" onclick="addLine()">+ Add another item</button><button class="btn" onclick="saveLog('${kind}')">${e?'Update transaction':'Save transaction'}</button>${e?'<button class="btn g" onclick="cancel()">Cancel</button>':''}</div><div id="msg">${msg}</div></div>`}
- <div class="card"><p class="sub" style="margin-bottom:8px">Each row groups every item recorded under one ${rec?'PO No.':'DR No.'}. Newest first. Click a row to see the details.</p><div class="tw"><table style="min-width:0"><tr><th>Date</th><th>${rec?'PO No.':'DR No.'}</th><th>${rec?'Supplier':'Project'}</th><th>JO No.</th><th class="n">Items</th></tr>
- ${g.map((x,i)=>`<tr class="dc" onclick="view('${kind}',${i})">${(()=>{const h=x.txs[0].rs[0],ps=[...new Set(x.txs.map(t=>t.rs[0].a).filter(Boolean))],js=[...new Set(x.txs.map(t=>t.rs[0].jo).filter(Boolean))],ni=new Set(x.txs.flatMap(t=>t.rs.map(r=>r.itemId))).size;return `<td>${esc(h.date)}</td><td><b>${esc(x.num)||'(NO '+(rec?'PO':'DR')+' NO.)'}</b></td><td>${esc(ps[0]||'')||'—'}${ps.length>1?' +'+(ps.length-1):''}</td><td>${esc(js[0]||'')||'—'}${js.length>1?' +'+(js.length-1):''}</td><td class="n">${ni}</td>`})()}</tr>`).join('')||'<tr><td colspan="5" class="empty">'+(loaded?'Nothing recorded yet.':'Loading…')+'</td></tr>'}
+ <div class="row" style="margin-top:12px"><button class="btn g" onclick="addLine()">+ Add another item</button><button class="btn" onclick="saveLog('${kind}')">${rec?(e?'Update transaction':'Save transaction'):(e?o.update:o.save)}</button>${e?'<button class="btn g" onclick="cancel()">Cancel</button>':''}</div><div id="msg">${msg}</div></div>`}
+ <div class="card"><p class="sub" style="margin-bottom:8px">Each row groups every item recorded under one ${rec?'PO number':o.refWord}. Newest first. Tap a row to see the details.</p><div class="tw"><table class="rt" style="min-width:0"><tr><th>Date</th><th>${rec?'PO No.':o.ref}</th><th>${rec?'Supplier':'Project'}</th>${!rec&&o.client?'<th>Client Name</th>':''}<th>JO No.</th><th class="n">Items</th></tr>
+ ${g.map((x,i)=>`<tr class="dc" onclick="view('${kind}',${i})">${(()=>{const h=x.txs[0].rs[0],ps=[...new Set(x.txs.map(t=>t.rs[0].a).filter(Boolean))],js=[...new Set(x.txs.map(t=>t.rs[0].jo).filter(Boolean))],ni=new Set(x.txs.flatMap(t=>t.rs.map(r=>r.itemId))).size;return `<td data-l="Date">${esc(h.date)}</td><td class="nm"><b>${esc(x.num)||'(NO '+(rec?'PO':o.refS)+' NO.)'}</b></td><td class="s2" data-l="${rec?'Supplier':'Project'}">${esc(ps[0]||'')||'—'}${ps.length>1?' +'+(ps.length-1):''}</td>${!rec&&o.client?(()=>{const cs=[...new Set(x.txs.map(t=>t.rs[0].client).filter(Boolean))];return `<td class="s2" data-l="Client Name">${esc(cs[0]||'')||'—'}${cs.length>1?' +'+(cs.length-1):''}</td>`})():''}<td data-l="JO No.">${esc(js[0]||'')||'—'}${js.length>1?' +'+(js.length-1):''}</td><td class="n" data-l="Items">${ni}</td>`})()}</tr>`).join('')||'<tr><td colspan="5" class="empty">'+(loaded?'Nothing recorded yet.':'Loading…')+'</td></tr>'}
  </table></div></div>`;
 }
 function view(kind,i){
@@ -178,9 +216,9 @@ function view(kind,i){
  const rec=kind==='received';
  const secs=g.txs.map((t,n)=>{
   const h=t.rs[0];
-  const f=rec?[['Date',h.date],['Supplier',h.a],['Project',h.b],['Sales Invoice No.',h.inv],['JO No.',h.jo]]:[['Date',h.date],['Project',h.a],['JO No.',h.jo]];
-  return `<div class="tsec"><div class="row" style="justify-content:space-between;align-items:center"><b>Transaction ${n+1}</b>${eb(kind,t.id)}</div><div class="kv">${f.map(([k,v])=>`<div><small>${k}</small><b>${esc(v)||'—'}</b></div>`).join('')}</div><div class="tw"><table style="min-width:0"><tr><th>Item</th><th class="n">Qty</th></tr>${t.rs.map(r=>{const it=item(r.itemId);return `<tr><td>${esc(it?it.name:'(removed item)')}</td><td class="n"><b>${r.qty}</b> ${esc(it?it.unit:'')}</td></tr>`}).join('')}</table></div></div>`}).join('');
- document.body.insertAdjacentHTML('beforeend',`<div class="mb" onclick="if(event.target===this)closeV()"><div class="md"><h3>${rec?'PO No.':'DR No.'}: ${esc(g.num)||'—'}</h3><small style="color:var(--mu)">${g.txs.length} transaction${g.txs.length>1?'s':''}</small>${secs}<div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn g" onclick="closeV()">Close</button></div></div></div>`);
+  const f=rec?[['Date',h.date],['Supplier',h.a],['Project',h.b],['Sales Invoice No.',h.inv],['JO No.',h.jo]]:[['Date',h.date],['Project',h.a],...(OUT().client?[['Client Name',h.client]]:[]),['JO No.',h.jo]];
+  return `<div class="tsec"><div class="row" style="justify-content:space-between;align-items:center"><b>${rec?'Transaction':OUT().one} ${n+1}</b>${eb(kind,t.id)}</div><div class="kv">${f.map(([k,v])=>`<div><small>${k}</small><b>${esc(v)||'—'}</b></div>`).join('')}</div><div class="tw"><table style="min-width:0"><tr><th>Item</th><th class="n">Qty</th></tr>${t.rs.map(r=>{const it=item(r.itemId);return `<tr><td>${esc(it?it.name:'(removed item)')}</td><td class="n"><b>${r.qty}</b> ${esc(it?it.unit:'')}</td></tr>`}).join('')}</table></div></div>`}).join('');
+ document.body.insertAdjacentHTML('beforeend',`<div class="mb" onclick="if(event.target===this)closeV()"><div class="md"><h3>${rec?'PO No.':OUT().ref}: ${esc(g.num)||'—'}</h3><small style="color:var(--mu)">${g.txs.length} ${rec?'transaction':OUT().one.toLowerCase()}${g.txs.length>1?'s':''}</small>${secs}<div class="row" style="margin-top:14px;justify-content:flex-end"><button class="btn g" onclick="closeV()">Close</button></div></div></div>`);
 }
 function closeV(){const m=document.querySelector('.mb');if(m)m.remove()}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeV()});
@@ -191,6 +229,7 @@ function go(keep){dirty=false;
  m.innerHTML=tab==='stocks'?stocks():tab==='settings'?settings():tab==='users'?usersTab():tab==='database'?dbTab():tab==='import'?importTab():log(tab);
  if(tab==='database'&&!DBI&&!DBE&&!DBL){DBL=1;setTimeout(()=>_dbRefresh().finally(()=>{DBL=0;if(tab==='database'&&!DBI&&!DBE)go()}),0)}
  document.querySelectorAll('nav button[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
+ const onb=document.querySelector('nav .tabs button.on');if(onb&&mob()){const s=onb.parentNode,l=onb.offsetLeft-s.offsetLeft;if(l<s.scrollLeft||l+onb.offsetWidth>s.scrollLeft+s.clientWidth)s.scrollLeft=l-16}
  c1.textContent=S.items.length;c2.textContent=S.received.length;c3.textContent=S.delivered.length;chrome();
  if(keep){const s=document.getElementById('s');if(s){s.focus();s.setSelectionRange(q.length,q.length)}}
 }
@@ -220,6 +259,7 @@ async function _saveItem(){
  const rows=lines().map(r=>({name:r.querySelector('.n').value.trim().toUpperCase(),unit:(r.querySelector('.u').value.trim()||'PCS').toUpperCase(),begin:Math.max(0,+r.querySelector('.b').value||0),min:Math.max(0,+r.querySelector('.m').value||0)})).filter(o=>o.name);
  if(!rows.length)return err('Please enter an item name.');
  await sync(!isEd('items'));
+ if(isEd('items')&&!item(editing.id))return gone();
  if(isEd('items')&&!canEd('items',editing.id))return err('You need the admin’s approval to edit this.');
  const snap=JSON.stringify(S),ed=isEd('items');
  const names=new Set(S.items.filter(i=>!ed||i.id!==editing.id).map(i=>i.name.toUpperCase()));
@@ -237,9 +277,10 @@ async function _saveLog(kind){
  if(rows.some(o=>!o.nm))return err('Every line needs an item name.');
  if(rows.some(o=>!(o.n>0)))return err('Enter a quantity greater than zero on every line.');
  await sync(!isEd(kind));
+ if(isEd(kind)&&!S[kind].some(r=>txOf(r)===editing.id))return gone();
  if(isEd(kind)&&!canEd(kind,editing.id))return err('You need the admin’s approval to edit this.');
  const snap=JSON.stringify(S),ed=isEd(kind),tx=ed?editing.id:uid(),d=val('d')||today();
- const h=kind==='received'?{date:d,a:val('p1'),b:val('p2'),inv:val('p3'),po:val('p4'),jo:val('p5')}:{date:d,a:val('p1'),jo:val('p3'),ref:val('p4')};
+ const h=kind==='received'?{date:d,a:val('p1'),b:val('p2'),inv:val('p3'),po:val('p4'),jo:val('p5')}:Object.assign({date:d,a:val('p1'),jo:val('p3'),ref:val('p4')},$('p6')?{client:val('p6')}:{});
  const at=ed?S[kind].findIndex(r=>txOf(r)===tx):-1,nr=[],base=(ed&&(S[kind].find(r=>txOf(r)===tx)||{}).ts)||Date.now();
  if(ed)S[kind]=S[kind].filter(r=>txOf(r)!==tx);
  for(const o of rows){
@@ -265,18 +306,57 @@ document.addEventListener('input',e=>{const t=e.target;if(t.closest&&t.closest('
 /* ===== Projects: each one has its own Google Sheet and its own stock ===== */
 const PROJ={hvac:'HVAC Projects',systems:'Systems Projects'};
 let PJ='systems';try{const v=localStorage.getItem('inv_proj');if(PROJ[v])PJ=v}catch(e){}
+/* Wording for the "out" side of stock. Systems Projects records Procurement Requests
+   (PRF No. and Client Name); HVAC Projects records Delivered Items (DR No.). Both
+   subtract from on-hand stock and are stored the same way (the "delivered" collection). */
+const OUT=()=>PJ==='systems'
+ ?{tab:'Procurement Request',short:'Procurement',rest:' Request',title:'Procurement Requests',col:'Requested',ref:'PRF No.',refS:'PRF',refWord:'PRF number',client:true,
+   sub:'Record procurement requests for projects. Add several items in one request.',kind:'procurement request',kinds:'procurement requests',lines:'Procurement request lines',save:'Save request',update:'Update request',one:'Request'}
+ :{tab:'Delivered Items',short:'Delivered',rest:' Items',title:'Delivered Items',col:'Delivered',ref:'DR No.',refS:'DR',refWord:'DR number',client:false,
+   sub:'Record materials going out to projects. Add several items in one transaction.',kind:'delivered transaction',kinds:'delivered transactions',lines:'Delivered lines',save:'Save transaction',update:'Update transaction',one:'Transaction'};
+/* Import columns for the "out" side follow the selected project. */
+function refreshImp(){
+ const o=OUT();
+ IMP.delivered={label:o.title,file:(PJ==='systems'?'procurement-request':'delivered-items')+'-template.csv',cols:[
+  {k:'date',h:'Date',req:1,al:['date']},{k:'a',h:'Project',al:['project']},
+  ...(o.client?[{k:'client',h:'Client Name',al:['clientname','client']}]:[]),
+  {k:'jo',h:'JO No.',al:['jono','jo']},
+  {k:'ref',h:o.ref,al:o.client?['prfno','prf','prfnumber']:['drno','dr']},
+  {k:'item',h:'Item Name',req:1,al:['itemname','item']},{k:'qty',h:'Quantity',req:1,al:['quantity','qty']}]};
+}
 function paintProj(){
+ const o=OUT(),nb=document.querySelector('nav button[data-t="delivered"]');
+ if(nb)nb.innerHTML=`<i class="tl">${o.short}<i class="x">${o.rest}</i></i> <span id="c3">${(S.delivered||[]).length}</span>`;
+ if(typeof IMP!=='undefined')refreshImp();
  document.querySelectorAll('.psw button').forEach(b=>{const on=b.dataset.p===PJ;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
- const t=document.getElementById('ttlS');if(t)t.textContent=PROJ[PJ]+' - Inventory · v1.3';
+ const t=document.getElementById('ttlS');if(t)t.textContent=PROJ[PJ]+' - Inventory · v1.4';
  document.title='RPI - Project Materials Inventory - '+PROJ[PJ];
 }
 function switchProj(p){
  if(p===PJ||!PROJ[p])return;
  if(busy||wc)return toast('Please wait until the current action finishes.',1);
- PJ=p;try{localStorage.setItem('inv_proj',p)}catch(e){}
- gen++;snapP=null;S={items:[],received:[],delivered:[]};R=[];loaded=false;
+ keep();PJ=p;try{localStorage.setItem('inv_proj',p)}catch(e){}
+ gen++;snapP=null;
+ // Show the project's last-loaded data right away, then refresh it from the sheet.
+ const c=PC[p];
+ if(c){S=JSON.parse(c.S);R=JSON.parse(c.R);loaded=true}else{S={items:[],received:[],delivered:[]};R=[];loaded=false}
  editing=null;msg='';q='';IPLAN=null;DBI=null;DBE='';closeV();
  paintProj();go();loadAll();toast('Switched to '+PROJ[p].toUpperCase());
+}
+/* Per-project copy of the last data loaded, so switching projects shows stocks at once. */
+const PC={};
+function keep(){if(loaded)PC[PJ]={S:JSON.stringify(S),R:JSON.stringify(R)}}
+function tidy(s){
+ const o={items:s.items||[],received:s.received||[],delivered:s.delivered||[]};
+ COLS.forEach(c=>o[c].sort((x,y)=>(x.ts||0)-(y.ts||0)));
+ o.received.forEach(x=>{if(x.po===undefined){x.po=x.ref||'';x.inv=x.inv||''}});
+ return o;
+}
+/** Loads the project that is not on screen in the background, once, so the first switch is instant too. */
+async function prefetch(){
+ const p=Object.keys(PROJ).find(k=>k!==PJ);
+ if(!p||PC[p])return;
+ try{const s=await api('snapshot',{p});if(PJ!==p&&!PC[p])PC[p]={S:JSON.stringify(tidy(s)),R:JSON.stringify(s.reqs||[])}}catch(e){}
 }
 const MK=()=>'inv_mem_'+PJ,MEMTABS=['stocks','received','delivered'];
 const memKey=t=>{
@@ -297,6 +377,7 @@ const MEMSRC={
  'delivered:p1':()=>[...pick('delivered',r=>r.a),...pick('received',r=>r.b)],
  'delivered:p3':()=>[...pick('delivered',r=>r.jo),...pick('received',r=>r.jo)],
  'delivered:p4':()=>pick('delivered',r=>r.ref),
+ 'delivered:p6':()=>pick('delivered',r=>r.client),
  'stocks:u':()=>S.items.map(i=>i.unit)
 };
 document.addEventListener('focusin',e=>{
@@ -315,16 +396,29 @@ let gen=0,wc=0,lastErr='',dirty=false,loaded=false;
 const COLS=['items','received','delivered'];
 let TOK='';try{TOK=sessionStorage.getItem('inv_tok')||''}catch(e){}
 const setTok=t=>{TOK=t||'';try{t?sessionStorage.setItem('inv_tok',t):sessionStorage.removeItem('inv_tok')}catch(e){}};
+const rawApi=(a,p)=>new Promise((ok,no)=>google.script.run.withSuccessHandler(ok).withFailureHandler(no).api(JSON.stringify(Object.assign({a,t:TOK,p:PJ},p||{})))).then(j=>j||{});
 async function api(a,p){
- const j=await new Promise((ok,no)=>google.script.run.withSuccessHandler(ok).withFailureHandler(no).api(JSON.stringify(Object.assign({a,t:TOK,p:PJ},p||{}))))||{};
- if(j.err){if(j.err==='auth'&&me){setTok('');me=null;try{sessionStorage.removeItem(SK)}catch(e){}showAuth()}throw Object.assign(new Error(j.err),{code:j.err})}
+ let j=await rawApi(a,p);
+ // Session ended (6 hours) or the browser switched Google accounts: sign in again from the Google account and retry once.
+ if(j.err==='auth'&&a!=='status'){
+  const s=await rawApi('status');
+  if(s.ok&&s.ok.user){
+   if(s.ok.token)setTok(s.ok.token);
+   if(me&&s.ok.user.id!==me){showBlock('Google account changed','This browser is now signed in to a different Google account. Reload the page to continue as that account.');throw Object.assign(new Error('auth'),{code:'auth'})}
+   j=await rawApi(a,p);
+  }
+ }
+ if(a!=='snapshot'&&a!=='status')snapP=null; // anything that changes data makes the shared load stale
+ if(j.err)throw Object.assign(new Error(j.err),{code:j.err});
  return j.ok;
 }
 let snapP=null,snapT=0;
-const snapshot=()=>{if(snapP&&Date.now()-snapT<500)return snapP;snapT=Date.now();snapP=api('snapshot');snapP.catch(()=>{snapP=null});return snapP};
+// One load serves every reader that asks while it is running or within 1 second after it
+// (sign-in, stocks, users and requests all share it). Saves and project switches clear it.
+const snapshot=()=>{if(snapP&&Date.now()-snapT<1000)return snapP;snapT=Infinity;const p=snapP=api('snapshot');p.then(()=>{if(snapP===p)snapT=Date.now()},()=>{if(snapP===p)snapP=null});return p};
 function apiDB(){
  let q=[],tm=null;
- const flush=async()=>{const b=q;q=[];tm=null;try{const res=await api('batch',{ops:b.map(x=>x.op)});b.forEach((x,i)=>{const r=res[i]||{};if(r.err)x.no(Object.assign(new Error(r.err),{code:r.err}));else x.ok(true)})}catch(e){b.forEach(x=>x.no(e))}};
+ const flush=async()=>{const b=q;q=[];tm=null;snapP=null;try{const res=await api('batch',{ops:b.map(x=>x.op)});snapP=null;b.forEach((x,i)=>{const r=res[i]||{};if(r.err)x.no(Object.assign(new Error(r.err),{code:r.err}));else x.ok(true)})}catch(e){b.forEach(x=>x.no(e))}};
  const w=op=>new Promise((ok,no)=>{q.push({op:JSON.parse(JSON.stringify(op)),ok,no});if(!tm)tm=setTimeout(flush,30)});
  return {
   doc:p=>({set:v=>w({t:'set',p,d:v}),create:v=>w({t:'create',p,d:v}),update:v=>w({t:'update',p,d:v}),delete:()=>w({t:'delete',p})}),
@@ -368,17 +462,10 @@ async function sync(core){
  const [u,r]=core?[null,null]:await Promise.all([ldAll('users'),ldAll('reqs')]);
  if(wc||g!==gen)return;
  if(s!==false){
-  S=s?{items:s.items||[],received:s.received||[],delivered:s.delivered||[]}:{items:[],received:[],delivered:[]};
-  COLS.forEach(c=>S[c].sort((x,y)=>(x.ts||0)-(y.ts||0)));
-  S.received.forEach(x=>{if(x.po===undefined){x.po=x.ref||'';x.inv=x.inv||''}});
+  S=tidy(s||{});
  }
  if(u)U=u;if(r)R=r;
 }
-const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-const unhex=h=>new Uint8Array(h.match(/../g).map(x=>parseInt(x,16)));
-async function hashPw(pw,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);return hex(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt,iterations:150000},k,256))}
-const UNRX=/^[a-z0-9._-]{3,24}$/,UNMSG='Username must be 3 to 24 characters: letters, numbers, dot, dash or underscore.';
-async function mkUser(email,pw,admin,name,username){const salt=crypto.getRandomValues(new Uint8Array(16));return {id:uid(),email,username:username||'',name:name||'',salt:hex(salt),hash:await hashPw(pw,salt),admin}}
 const DOM='@riteproducts.com.ph',mailMsg='Use your @riteproducts.com.ph email address.';
 const okMail=s=>/^\S+@\S+\.\S+$/.test(s)&&s.endsWith(DOM)&&s.length>DOM.length;
 const idOf=u=>u.id||u.email,meU=()=>U.find(x=>idOf(x)===me);
@@ -389,26 +476,72 @@ const note=(id,t,good)=>{const e=$(id);if(e){e.textContent=t;e.style.color=good?
 const keyOf=(k,id)=>k+':'+id,reqFor=(k,id)=>R.filter(r=>r.by===me&&r.key===keyOf(k,id)).pop();
 const canEd=(k,id)=>!isViewer()&&(isAdmin()||(reqFor(k,id)||{}).st==='approved');
 function consume(k,id){const r=reqFor(k,id);if(!isAdmin()&&r&&r.st==='approved'){r.st='done';wr('reqs',r.id,{st:'done'},1)}}
+/* Delete requests use their own key ("del|kind:id") so they never mix with edit requests. */
+const delKey=(k,id)=>'del|'+keyOf(k,id),delReq=(k,id)=>R.filter(r=>r.by===me&&r.key===delKey(k,id)).pop();
 function eb(k,id){
  if(isViewer())return '<span style="color:var(--mu)">View only</span>';
- if(canEd(k,id))return `<button class="ab e" onclick="edit('${k}','${id}')">Edit</button>`;
- const st=(reqFor(k,id)||{}).st;
- if(st==='pending')return '<span class="tag low">Waiting for approval</span>';
- return `<button class="ab e" onclick="reqEdit('${k}','${id}')">${st==='denied'?'Request again':'Request edit'}</button>`;
+ if(isAdmin())return `<button class="ab e" onclick="edit('${k}','${id}')">Edit</button><button class="ab d" onclick="delRec('${k}','${id}')">Delete</button>`;
+ let h;
+ if(canEd(k,id))h=`<button class="ab e" onclick="edit('${k}','${id}')">Edit</button>`;
+ else{const st=(reqFor(k,id)||{}).st;
+  h=st==='pending'?'<span class="tag low">Waiting for approval</span> ':`<button class="ab e" onclick="reqEdit('${k}','${id}')">${st==='denied'?'Request again':'Request edit'}</button>`}
+ const ds=(delReq(k,id)||{}).st;
+ return h+(ds==='pending'?'<span class="tag out">Delete requested</span>':`<button class="ab d" onclick="reqDelete('${k}','${id}')">Request delete</button>`);
 }
-function labelOf(k,id){if(k==='items'){const i=item(id);return i?i.name:'item'}const r=S[k].find(x=>txOf(x)===id);return r?(k==='received'?'PO '+(r.po||'—'):'DR '+(r.ref||'—'))+' · '+r.date:'transaction'}
+/* Editor asks an admin to delete an item or a whole transaction. */
+async function reqDelete(k,id){
+ await sync();const c=delReq(k,id);
+ if(c&&c.st==='pending'){closeV();return go()}
+ if(!confirm('Ask an admin to delete '+labelOf(k,id)+'?'))return;
+ const q={id:uid(),by:me,key:delKey(k,id),act:'delete',kind:k,tid:id,label:labelOf(k,id),pj:PJ,st:'pending',at:Date.now()};
+ R.push(q);
+ if(await wr('reqs',q.id,q))toast('Delete request sent to the admin');else{R=R.filter(x=>x!==q);toast('Could not send the request ('+lastErr+')',1)}
+ closeV();go();
+}
+/* Admin deletes directly. Not logged in Deleted Records. */
+async function delRec(k,id){
+ if(!isAdmin())return;
+ await sync();
+ if(k==='items'){
+  const it=item(id);if(!it)return gone();
+  if(S.received.concat(S.delivered).some(r=>r.itemId===id))return toast('This item still has received or '+OUT().kinds+'. Delete those first.',1);
+  if(!confirm('Delete '+it.name+'?'))return;
+ }else{
+  if(!S[k].some(r=>txOf(r)===id))return gone();
+  if(!confirm('Delete this transaction ('+labelOf(k,id)+') and all its items?'))return;
+ }
+ const snap=JSON.stringify(S);
+ if(k==='items')S.items=S.items.filter(i=>i.id!==id);else S[k]=S[k].filter(r=>txOf(r)!==id);
+ if(neg()){S=JSON.parse(snap);return toast('Deleting this would make stock go below zero.',1)}
+ closeV();
+ if(!(await commit(snap)))return;
+ if(editing&&editing.kind===k&&editing.id===id)editing=null;
+ toast('Deleted');go();
+}
+function labelOf(k,id){if(k==='items'){const i=item(id);return i?i.name:'item'}const r=S[k].find(x=>txOf(x)===id);return r?(k==='received'?'PO '+(r.po||'—'):OUT().refS+' '+(r.ref||'—'))+' · '+r.date:'transaction'}
 async function reqEdit(k,id){
  await sync();const c=reqFor(k,id);
  if(!c||!['pending','approved'].includes(c.st)){const q={id:uid(),by:me,key:keyOf(k,id),kind:k,tid:id,label:labelOf(k,id),pj:PJ,st:'pending',at:Date.now()};R.push(q);await wr('reqs',q.id,q)}
  closeV();go();
 }
-async function decide(id,st){await sync();const r=R.find(x=>x.id===id);if(r&&isAdmin()){r.st=st;await wr('reqs',id,{st},1)}go()}
+async function decide(id,st){
+ await sync();const r=R.find(x=>x.id===id);
+ if(!r||!isAdmin())return go();
+ if(r.act==='delete'&&st==='approved'){
+  // Approving deletes the record on the server and logs it in Deleted Records.
+  if(!confirm('Delete '+r.label+'? It will be recorded in the Deleted Records tab.'))return;
+  try{await tmo(api('approvedelete',{id}));toast('Deleted and logged')}
+  catch(e){const c=e&&e.code;toast(c==='in_use'?'This item still has received or '+OUT().kinds+'. Delete those first.':c==='negative'?'Deleting this would make stock go below zero.':c==='not_pending'?'This request was already handled.':'Could not delete ('+(c||'error')+')',1)}
+  snapP=null;await sync();return go();
+ }
+ r.st=st;await wr('reqs',id,{st},1);go();
+}
 function chrome(){const u=meU();if(!u)return;$('av').textContent=(u.name||u.email).trim().charAt(0).toUpperCase();$('pn').textContent=u.name||'';$('pe').textContent=u.email+(u.username?' · @'+u.username:'');const ad=isAdmin();$('tUsers').style.display=$('tDb').style.display=ad?'':'none';$('tImp').style.display=isViewer()?'none':'';const n=R.filter(r=>r.st==='pending').length;$('c4').textContent=ad&&n?n:''}
 function settings(){
  const u=meU();
  return `<h2>Settings</h2><p class="sub">${ROLE_NAMES[myRole()]} account. Your email can’t be changed.</p>
  <div class="card"><h3>Profile</h3><div class="row"><label>Name<input id="sN" value="${esc(u.name||'')}"></label><label>Email<input type="email" value="${esc(u.email)}" disabled></label><button class="btn" onclick="saveProf()">Save profile</button></div><div class="am" id="sM1"></div></div>
- ${!u.hasPw?`<div class="card"><h3>Password</h3><p class="sub" style="margin:0">You sign in with your Google account, so you don’t need a password.</p></div>`:`<div class="card"><h3>Change password</h3><div class="row"><label>Current password<input id="sP0" type="password" autocomplete="current-password"></label><label>New password<input id="sP1" type="password" autocomplete="new-password"></label><label>Confirm new password<input id="sP2" type="password" autocomplete="new-password"></label><button class="btn" onclick="savePw()">Change password</button></div><div class="am" id="sM2"></div></div>`}`;
+ <div class="card"><h3>Sign-in</h3><p class="sub" style="margin:0">You’re signed in with your company Google account. There’s no password to remember.</p></div>`;
 }
 const saveProf=()=>run(_saveProf);
 async function _saveProf(){
@@ -417,26 +550,13 @@ async function _saveProf(){
  try{await tmo(api('profile',{name}))}catch(e){return note('sM1','Could not save. Please try again.')}
  u.name=name;chrome();note('sM1','Name saved.',1);
 }
-const savePw=()=>run(_savePw);
-async function _savePw(){
- await sync();const u=meU(),p1=$('sP1').value,e=t=>note('sM2',t);
- if(!u)return;
- if(p1.length<8)return e('New password must be at least 8 characters.');
- if(p1!==$('sP2').value)return e('Passwords do not match.');
- try{
-  const s=await tmo(api('salt',{id:u.email})),oldHash=await hashPw($('sP0').value,unhex(s.salt));
-  const salt=crypto.getRandomValues(new Uint8Array(16));
-  await tmo(api('password',{oldHash,salt:hex(salt),hash:await hashPw(p1,salt)}));
- }catch(x){return e(x&&x.code==='bad_login'?'Current password is incorrect.':x&&x.code==='locked'?'Too many attempts. Try again in 15 minutes.':'Could not save. Please try again.')}
- ['sP0','sP1','sP2'].forEach(i=>$(i).value='');note('sM2','Password changed.',1);
-}
 function usersTab(){
  const pend=R.filter(r=>r.st==='pending');
  const roleSel=(id,cur,dis)=>`<select ${id?`onchange="setRole('${id}',this.value,this)"`:'id="nuR"'}${dis?' disabled':''}>${['admin','editor','viewer'].map(r=>`<option value="${r}"${r===cur?' selected':''}>${ROLE_NAMES[r]}</option>`).join('')}</select>`;
- return `<h2>Users</h2><p class="sub">Manage accounts, roles and edit requests. Admins can do everything. Editors can add records, import and request edits. Viewers can only look. Role changes are saved to the Users tab in the Google Sheet.</p>
- <div class="card"><h3>Edit requests</h3>${pend.map(r=>{const u=U.find(x=>idOf(x)===r.by);return `<div class="row" style="justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(u?(u.name||u.email):'?')}</b> wants to edit ${r.kind==='items'?'stock item':r.kind} <b>${esc(r.label)}</b></span><span><button class="ab e" onclick="decide('${r.id}','approved')">Approve</button><button class="ab d" onclick="decide('${r.id}','denied')">Deny</button></span></div>`}).join('')||'<div class="empty">No pending requests.</div>'}</div>
- <div class="card"><h3>Add user</h3><div class="row"><label>Name<input id="nuN"></label><label>Username<input id="nuU" autocapitalize="none"></label><label>Email<input id="nuE" type="email" placeholder="name@riteproducts.com.ph"></label><label>Temporary password<input id="nuP" type="password" autocomplete="new-password"></label><label>Role${roleSel('', 'editor')}</label><button class="btn" onclick="addUser()">Add user</button></div><div class="am" id="nuM"></div></div>
- <div class="card"><div class="tw"><table><tr><th>Name</th><th>Username</th><th>Email</th><th>Role</th></tr>${U.map(u=>`<tr><td>${esc(u.name||'—')}</td><td style="text-transform:none">${esc(u.username||'—')}</td><td style="text-transform:none">${esc(u.email)}</td><td>${roleSel(u.id,roleOf(u),u.owner||idOf(u)===me)}${u.owner?' <small style="color:var(--mu)">Owner</small>':idOf(u)===me?' <small style="color:var(--mu)">You</small>':''}</td></tr>`).join('')}</table></div></div>`;
+ return `<h2>Users</h2><p class="sub">Manage roles and edit requests. Everyone signs in with their company Google account. People are added here automatically as Viewer the first time they open the app; change their role below. Admins can do everything. Editors can add records, import and request edits. Viewers can only look. Changes are saved to the Users tab in the Google Sheet.</p>
+ <div class="card"><h3>Edit and delete requests</h3>${pend.map(r=>{const u=U.find(x=>idOf(x)===r.by),del=r.act==='delete';return `<div class="row" style="justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b>${esc(u?(u.name||u.email):'?')}</b> wants to ${del?'<b style="color:var(--bad)">delete</b>':'edit'} ${r.kind==='items'?'stock item':r.kind==='received'?'received transaction':OUT().kind} <b>${esc(r.label)}</b></span><span><button class="ab ${del?'d':'e'}" onclick="decide('${r.id}','approved')">${del?'Approve delete':'Approve'}</button><button class="ab d" onclick="decide('${r.id}','denied')">Deny</button></span></div>`}).join('')||'<div class="empty">No pending requests.</div>'}</div>
+ <div class="card"><h3>Add someone ahead of time</h3><p class="sub" style="margin:0 0 10px">Optional. Use this to give someone a role before they first open the app.</p><div class="row"><label>Name<input id="nuN"></label><label>Email<input id="nuE" type="email" placeholder="name@riteproducts.com.ph"></label><label>Role${roleSel('', 'editor')}</label><button class="btn" onclick="addUser()">Add user</button></div><div class="am" id="nuM"></div></div>
+ <div class="card"><div class="tw"><table class="rt"><tr><th>Name</th><th>Username</th><th>Email</th><th>Role</th></tr>${U.map(u=>`<tr><td class="nm">${esc(u.name||'—')}</td><td style="text-transform:none" data-l="Username">${esc(u.username||'—')}</td><td class="full" style="text-transform:none;order:-1" data-l="Email">${esc(u.email)}</td><td class="s2" data-l="Role">${roleSel(u.id,roleOf(u),u.owner||idOf(u)===me)}${u.owner?' <small style="color:var(--mu)">Owner</small>':idOf(u)===me?' <small style="color:var(--mu)">You</small>':''}</td></tr>`).join('')}</table></div></div>`;
 }
 async function setRole(id,role,sel){
  const u=U.find(x=>x.id===id);if(!u||!isAdmin())return;
@@ -448,17 +568,13 @@ async function setRole(id,role,sel){
 }
 const addUser=()=>run(_addUser);
 async function _addUser(){
- await sync();const em=$('nuE').value.trim().toLowerCase(),pw=$('nuP').value,m=t=>note('nuM',t);
+ await sync();const em=$('nuE').value.trim().toLowerCase(),m=t=>note('nuM',t);
  if(!isAdmin())return;
  if(!okMail(em))return m(mailMsg);
- const un=$('nuU').value.trim().toLowerCase();
- if(!UNRX.test(un))return m(UNMSG);
- if(U.some(u=>(u.username||'')===un))return m('That username is already taken.');
- if(pw.length<8)return m('Password must be at least 8 characters.');
  if(U.some(u=>u.email===em))return m('That email already has an account.');
- const nu=await mkUser(em,pw,false,val('nuN'),un);nu.role=$('nuR').value;
- try{const r=await tmo(api('adduser',{user:nu}));nu.id=r.id;nu.role=r.role||nu.role;nu.admin=nu.role==='admin'}catch(e){const c=e&&e.code;return m(c==='username_taken'?'That username is already taken.':c==='email_taken'?'That email already has an account.':'Could not save. Please try again.')}
- const {salt,hash,...pub}=nu;U.push(pub);go();
+ let nu;
+ try{nu=await tmo(api('adduser',{user:{email:em,name:val('nuN'),role:$('nuR').value}}))}catch(e){return m(e&&e.code==='email_taken'?'That email already has an account.':'Could not save. Please try again.')}
+ U.push(nu);toast((nu.name||nu.email)+' added as '+ROLE_NAMES[nu.role]);go();
 }
 /* ===== Import: templates, file reading, checks, then saving in batches ===== */
 const IMP={
@@ -541,7 +657,7 @@ function planImport(kind,rows){
    if(kind==='delivered')return e(item+' is not in Stocks. Receive it or add it under Stocks first.');
    it={id:uid(),ts:ts(),name:item,unit:'PCS',begin:0,min:10};byName.set(item,it);out.items.push(it);out.newItems++;
   }
-  const h=kind==='received'?{date,a:txt(get(r,'a')),b:txt(get(r,'b')),inv:txt(get(r,'inv')),po:txt(get(r,'po')),jo:txt(get(r,'jo'))}:{date,a:txt(get(r,'a')),jo:txt(get(r,'jo')),ref:txt(get(r,'ref'))};
+  const h=kind==='received'?{date,a:txt(get(r,'a')),b:txt(get(r,'b')),inv:txt(get(r,'inv')),po:txt(get(r,'po')),jo:txt(get(r,'jo'))}:{date,a:txt(get(r,'a')),jo:txt(get(r,'jo')),ref:txt(get(r,'ref')),...(OUT().client?{client:txt(get(r,'client'))}:{})};
   lines.push({h,it,q});out.preview.push(c.cols.map(d=>d.k==='item'?item:d.k==='qty'?q:h[d.k]));
  });
  if(kind!=='items'){
@@ -570,7 +686,7 @@ function importTab(){
  const c=IMP[IK],P=IPLAN&&IPLAN.kind===IK?IPLAN:null,keys=Object.keys(IMP);
  let h=`<h2>Import</h2><p class="sub">Add many records at once from Excel or CSV. Download a template, fill it in, then upload it here. Nothing is saved until you click Import.</p>
  <div class="card"><h3>1. Download a template</h3><div class="row">${keys.map(k=>`<button class="btn g" onclick="tpl('${k}')">${IMP[k].label} template</button>`).join('')}</div>
- <p class="sub" style="margin:10px 0 6px">Keep the header row. Columns marked * are required. Dates can be YYYY-MM-DD or MM/DD/YYYY. Received rows with the same date, supplier, project, invoice, PO and JO become one transaction; delivered rows group by date, project, JO and DR. Items not yet in Stocks are added automatically when received.</p>
+ <p class="sub" style="margin:10px 0 6px">Keep the header row. Columns marked * are required. Dates can be YYYY-MM-DD or MM/DD/YYYY. Received rows with the same date, supplier, project, invoice, PO and JO become one transaction; ${OUT().kinds} group by date, project${OUT().client?", client":""}, JO and ${OUT().refS}. Items not yet in Stocks are added automatically when received.</p>
  <div class="tw"><table style="min-width:0"><tr><th>Template</th><th>Columns</th></tr>${keys.map(k=>`<tr><td>${IMP[k].label}</td><td style="white-space:normal;text-transform:none">${IMP[k].cols.map(d=>esc(d.h)+(d.req?'*':'')).join(', ')}</td></tr>`).join('')}</table></div></div>
  <div class="card"><h3>2. Upload your file</h3><div class="row"><label>What are you importing?<select id="imK" onchange="IK=this.value;IPLAN=null;msg='';go()">${keys.map(k=>`<option value="${k}"${k===IK?' selected':''}>${IMP[k].label}</option>`).join('')}</select></label><label>File (.xlsx, .xls or .csv)<input id="imF" type="file" accept=".xlsx,.xls,.csv" onchange="pickFile(this)"></label></div><div id="msg">${esc(msg)}</div></div>`;
  if(!P)return h;
@@ -606,10 +722,10 @@ function dbTab(){
  <div class="card"><div class="row" style="justify-content:space-between;align-items:center"><div>${st}${info}</div><div class="row"><button class="btn" onclick="dbRefresh()">Refresh connection</button>${link}</div></div><div class="am" id="dbM">${esc(DBE)}</div></div>`;
  if(!d)return h;
  const c=d.counts;
- h+=`<div class="stats">${[['Items',c.items],['Received lines',c.received],['Delivered lines',c.delivered],['Users',c.users],['Edit requests',c.reqs]].map(([k,v])=>`<div class="stat"><b>${v}</b><small>${k}</small></div>`).join('')}</div>
+ h+=`<div class="stats">${[['Items',c.items],['Received lines',c.received],[OUT().lines,c.delivered],['Users',c.users],['Edit requests',c.reqs]].map(([k,v])=>`<div class="stat"><b>${v}</b><small>${k}</small></div>`).join('')}</div>
  <div class="card"><h3 style="text-transform:none">${esc(d.name)}</h3><div class="kv"><div><small>Last saved</small><b>${esc(fmt(d.updated))}</b></div><div><small>App Data tab</small><b>${d.dataTab?'Present':'Not created yet'}</b></div><div><small>Accounts and requests storage</small><b>${Math.round(d.propsBytes/1024)} KB of 500 KB</b></div><div><small>Server read time</small><b>${d.ms} ms</b></div></div>
  <div class="tw"><table style="min-width:0"><tr><th>Sheet tab</th><th class="n">Rows (below header)</th></tr>${d.tabs.map(t=>`<tr><td style="text-transform:none">${esc(t.name)}</td><td class="n">${t.rows}</td></tr>`).join('')}</table></div></div>
- <div class="card"><h3>Rebuild sheet tabs</h3><p class="sub">Rewrites the Items, Received and Delivered tabs from the app’s saved data, and creates the App Data tab if it is missing. Use it if those tabs were edited by hand or look wrong. Anything typed directly into those three tabs is replaced.</p><button class="btn g" onclick="dbRebuild()">Rebuild sheet tabs</button></div>`;
+ <div class="card"><h3>Rebuild sheet tabs</h3><p class="sub">Rewrites the Items, Received and ${OUT().tab} tabs from the app’s saved data, and creates the App Data tab if it is missing. Use it if those tabs were edited by hand or look wrong. Anything typed directly into those three tabs is replaced.</p><button class="btn g" onclick="dbRebuild()">Rebuild sheet tabs</button></div>`;
  return h;
 }
 const dbRefresh=()=>run(_dbRefresh);
@@ -623,33 +739,13 @@ async function _dbRefresh(){
  if(tab==='database'&&!document.querySelector('.mb'))go();
 }
 function dbRebuild(){
- if(!confirm('Rewrite the Items, Received and Delivered tabs from the app’s saved data?'))return;
+ if(!confirm('Rewrite the Items, Received and '+OUT().tab+' tabs from the app’s saved data?'))return;
  run(async()=>{
   const t0=performance.now(),pj=PJ;
   try{const d=await tmo(api('rebuild'));if(pj===PJ){DBI=d;DBT=Math.round(performance.now()-t0);DBE=''}toast(PROJ[pj].toUpperCase()+' sheet tabs rebuilt')}
   catch(e){toast('Could not rebuild ('+((e&&e.code)||'error')+')',1)}
   if(tab==='database')go();
  });
-}
-let GA=false;
-const setOut=v=>{try{v?sessionStorage.setItem('inv_out','1'):sessionStorage.removeItem('inv_out')}catch(e){}};
-function showAuth(){
- ldx();
- if(!U.length&&!GA)return showBlock('Not set up yet','The administrator has not opened this app yet. Please contact your administrator.');
- $('app').style.display='none';$('auth').style.display='flex';$('aForm').style.display='';$('blk').style.display='none';
- mode='login';
- $('aT').textContent='Log in';
- $('aS').textContent=GA?'You are using the administrator’s Google account. Continue below, or log in with a user account.':'Enter your email or username and password. Ask your administrator if you need an account.';
- $('aG').style.display=GA?'':'none';
- $('aPass').value='';$('aMsg').textContent='';
- document.querySelectorAll('#auth .eye').forEach(b=>{b.previousSibling.type='password';b.textContent='Show'});
-}
-async function gLogin(){
- const m=t=>{$('aMsg').textContent=t};
- try{const st=await tmo(api('status',{auto:true}));if(!st.user)throw 0;if(st.token)setTok(st.token);me=st.user.id}
- catch(e){return m('Could not sign in with your Google account. Reload the page and try again.')}
- setOut(0);await syncUsers();try{sessionStorage.setItem(SK,me)}catch(e){}
- showApp(1);loadAll();
 }
 function showApp(anim){
  ldx();
@@ -662,49 +758,56 @@ function showApp(anim){
   setTimeout(()=>{it.style.display='none';it.classList.remove('go');p.classList.remove('zin')},2650);
  }else{a.style.display='none';p.style.display=''}
 }
-async function authSubmit(ev){
- ev.preventDefault();
- const id=$('aEmail').value.trim().toLowerCase(),pw=$('aPass').value,m=t=>{$('aMsg').textContent=t};
- if(!id)return m('Enter your email or username.');
- if(!window.crypto||!crypto.subtle)return m('This browser can’t do secure sign-in here.');
- try{
-  const s=await tmo(api('salt',{id}));
-  const r=await tmo(api('login',{id,hash:await hashPw(pw,unhex(s.salt))}));
-  setTok(r.token);me=r.user.id;
- }catch(e){
-  const c=e&&e.code;
-  if(c==='bad_login'){await new Promise(r=>setTimeout(r,700));return m('Incorrect email, username or password.')}
-  if(c==='locked')return m('Too many attempts. Try again in 15 minutes.');
-  return m('Could not sign in. Please try again.');
- }
- setOut(0);await syncUsers();try{sessionStorage.setItem(SK,me)}catch(e){}
- showApp(1);loadAll();
-}
 const paintTg=()=>{const d=curTheme()==='dark';document.querySelectorAll('.tg').forEach(b=>{b.textContent=d?'☀':'☾';b.title=d?'Switch to light mode':'Switch to dark mode';b.setAttribute('aria-label',b.title)})};
 function curTheme(){return document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
 function toggleTheme(){const t=curTheme()==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('rpi_theme',t)}catch(e){}paintTg()}
 try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',paintTg)}catch(e){}
 paintTg();
-function logout(){try{api('logout').catch(()=>{})}catch(e){}setTok('');setOut(1);DBI=null;DBE='';$('pop').style.display='none';me=null;try{sessionStorage.removeItem(SK)}catch(e){}closeV();editing=null;showAuth()}
-function eyes(){document.querySelectorAll('input[type=password]').forEach(i=>{if(i.dataset.pw)return;i.dataset.pw=1;const w=document.createElement('span');w.className='pw';i.parentNode.insertBefore(w,i);w.appendChild(i);const b=document.createElement('button');b.type='button';b.className='eye';b.textContent='Show';b.setAttribute('aria-label','Show or hide password');b.onclick=()=>{const h=i.type==='password';i.type=h?'text':'password';b.textContent=h?'Hide':'Show'};w.appendChild(b)})}
-new MutationObserver(eyes).observe(document.body,{childList:true,subtree:true});eyes();
 document.addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()},true);
 function togglePop(e){e.stopPropagation();const p=$('pop');p.style.display=p.style.display==='none'?'flex':'none'}
 document.addEventListener('click',e=>{if(!e.target.closest('#pop,#av'))$('pop').style.display='none'});
 function ldx(){const d=document.getElementById('ld');if(d)d.remove()}
-function showBlock(t,m){ldx();$('app').style.display='none';$('auth').style.display='flex';$('aForm').style.display='none';$('blk').style.display='';$('bT').textContent=t;$('bM').textContent=m}
+function showBlock(t,m,retry){ldx();$('app').style.display='none';$('auth').style.display='flex';$('blk').style.display='';$('bT').textContent=t;$('bM').textContent=m;$('bR').style.display=retry?'':'none'}
 async function refresh(){const t=tab;await sync();if(t===tab&&!dirty&&!document.querySelector('.mb'))go()}
-async function loadAll(){await sync();loaded=true;chrome();if(meU()&&!dirty&&!document.querySelector('.mb'))go()}
+async function loadAll(){const p=PJ;await sync();if(p!==PJ)return;loaded=true;keep();chrome();if(meU()&&!dirty&&!document.querySelector('.mb'))go();setTimeout(prefetch,1500)}
+/* Keeps the screen in step with the Google Sheet: every 20 seconds and whenever the tab
+   comes back into view, reload the data; if it changed (for example rows deleted in the
+   sheet), redraw, unless the person is typing or has a popup open. */
+let liveBusy=false;
+async function live(){
+ if(!meU()||busy||liveBusy||document.visibilityState==='hidden')return;
+ liveBusy=true;
+ try{
+  const before=JSON.stringify(S);
+  await sync();keep();chrome();
+  const changed=JSON.stringify(S)!==before;
+  if(editing&&(editing.kind==='items'?!item(editing.id):!S[editing.kind].some(r=>txOf(r)===editing.id))){gone();return}
+  if(dirty||document.querySelector('.mb'))return;
+  const quiet=![...document.querySelectorAll('#main input')].some(i=>i.value&&i.type!=='date'&&i.type!=='number');
+  if((changed&&['stocks','received','delivered'].includes(tab))||(tab==='users'&&quiet)){const m=$('main'),y=m.scrollTop;go();m.scrollTop=y}
+ }finally{liveBusy=false}
+}
+/** The record being edited was deleted (in the Google Sheet or by someone else). */
+function gone(){editing=null;msg='';toast('That record was deleted in the Google Sheet, so the edit was cancelled.',1);go()}
+let booted=false;
 async function boot(){
  if(!(window.google&&google.script&&google.script.run))return showBlock('Cannot open the app','Open this app from its Apps Script web app link (script.google.com/…/exec).');
  DB=apiDB();OWN=true;paintProj();
+ if(booted)$('bR').disabled=true;
  try{
-  let out=false;try{out=sessionStorage.getItem('inv_out')==='1'}catch(e){}
-  const st=await api('status',{auto:!out});GA=!!st.gAdmin;
-  if(st.user){if(st.token)setTok(st.token);me=st.user.id;try{sessionStorage.setItem(SK,me)}catch(e){}await syncUsers()}else{me=null;setTok('');U=st.has?[{id:'_'}]:[]}
- }catch(e){return showBlock('Cannot reach the database','Could not reach the inventory database. Check your connection and reload. If it keeps happening, ask the administrator to check the Apps Script deployment.')}
- if(U.some(x=>idOf(x)===me)){showApp(1);loadAll()}else showAuth();
- setInterval(async()=>{if(!meU()||busy)return;await sync();chrome();if(tab==='users'&&!document.querySelector('.mb')&&![...document.querySelectorAll('#main input')].some(i=>i.value))go()},30000);
+  // The Google account opening the app is the sign-in. New company accounts are added as Viewer.
+  const st=await api('status');
+  if(st.token)setTok(st.token);me=st.user.id;try{sessionStorage.setItem(SK,me)}catch(e){}
+  await syncUsers();if(!meU())U.push(st.user);
+ }catch(e){
+  $('bR').disabled=false;
+  if(e&&e.code==='forbidden')return showBlock('Company account needed','Open this app while signed in to your @riteproducts.com.ph Google account.');
+  return showBlock('Cannot reach the database','Could not reach the inventory database. Check your connection and try again. If it keeps happening, ask the administrator to check the Apps Script deployment.',1);
+ }
+ showApp(1);loadAll();
+ if(booted)return;booted=true;
+ setInterval(live,20000);
+ document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')live()});
 }
 boot();
 </script>
